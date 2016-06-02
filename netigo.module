@@ -1,0 +1,121 @@
+<?php
+
+/**
+ * @file
+ * A checklist implementation of the Checklist API.
+ */
+
+/**
+ * Implements hook_checklistapi_checklist_info().
+ */
+function netigo_checklistapi_checklist_info() {
+  $checklists = array();
+  $checklists['netigo_checklist'] = array(
+    '#title' => '網站上線檢核表',
+    '#path' => 'admin/config/development/netigo-checklist',
+    '#description' => '專案/企劃/工程人員檢查項目',
+    '#help' => '',
+
+    'g1_1' => array(
+      '#title' => '網站資料',
+      '#description' => '網站資料、SEO/OG、內容、圖片、編輯器、金流服務，由專案/企劃人員檢查。',
+      'g1_1_item_1' => array(
+        '#title' => '請專案管理者負責在 neticrm.tw 填寫/確認客戶會籍資料正確（網址、方案、起訖時間）',
+        'item_link' => array(
+          '#text' => 'neticrm.tw',
+          '#path' => 'https://neticrm.tw',
+        ),
+      ),
+    ),
+    'g1_2' => array(
+      '#title' => 'SEO/OG',
+      '#description' => '',
+      'g1_2_item_1' => array(
+        '#title' => '確認網站首頁有自訂的描述',
+        '#default_value' => module_exists('metatag'),
+        'project_page' => array(
+          '#text' => t('Download'),
+          '#path' => 'https://www.drupal.org/project/metatag',
+        ),
+        'modules_page' => array('#text' => '設定', '#path' => 'admin/config/search/metatags'),
+      ),
+      'g1_2_item_2' => array(
+        '#title' => '確認FB可正確抓到頁面標題/描述/圖片',
+        'project_page' => array(
+          '#text' => '測試',
+          '#path' => 'https://developers.facebook.com/tools/debug/',
+        ),
+      ),
+    ),
+    'g1_3' => array(
+      '#title' => '內容',
+      '#description' => '',
+      'g1_3_item_1' => array(
+        '#title' => '移除確定不會用到的內容類型',
+      ),
+      'g1_3_item_2' => array(
+        '#title' => '移除測試文章',
+      ),
+      'g1_3_item_3' => array(
+        '#title' => 'Content type > Display fields > Basic 確認欄位呈現方式是否正確',
+        '#description' => '注意這裡的設定可能被版型、Panels...等覆寫，因此在這裡調整也沒作用。'
+      ),
+      'g1_3_item_4' => array(
+        '#title' => '網站統計、 google analytics 是否有設定正確',
+        '#default_value' => module_exists('googleanalytics'),
+        'project_page' => array(
+          '#text' => t('Download'),
+          '#path' => 'https://www.drupal.org/project/google_analytics',
+        ),
+        'modules_page' => array('#text' => '設定', '#path' => 'admin/config/system/googleanalytics'),
+      ),
+    ),
+    'g1_4' => array(
+      '#title' => '圖片',
+      '#description' => '',
+      'g1_4_item_1' => array(
+        '#title' => '檢查是否有破圖',
+      ),
+      'g1_4_item_2' => array(
+        '#title' => '若有文章代表圖的 cck，建議設置預設圖片',
+        '#description' => '預設圖片有時在前端列表頁中出現，當此欄位沒上傳圖片時可以補缺。',
+      ),
+    ),
+    'g1_5' => array(
+      '#title' => '編輯器',
+      '#description' => '',
+      'g1_5_item_1' => array(
+        '#title' => '確認編輯器是否有在正確的欄位或頁面出現',
+      ),
+      'g1_5_item_2' => array(
+        '#title' => '確認編輯器的 profile 角色設定是否正確',
+        'configure_page' => array('#text' => '設定', '#path' => 'admin/config/content/formats'),
+      ),
+      'g1_5_item_3' => array(
+        '#title' => '盡量確保編輯器的畫面能與網頁上呈現的一致性',
+      ),
+      'g1_5_item_4' => array(
+        '#title' => '確認 class 元素不會被濾掉，以及空內容的元素不會被濾掉',
+      ),
+    ),
+    'g1_6' => array(
+      '#title' => '金流服務',
+      '#description' => '',
+      'g1_6_item_1' => array(
+        '#title' => '加入購物車、刷卡（有購物車的話）',
+      ),
+      'g1_6_item_2' => array(
+        '#title' => '捐款、刷卡（有金流的話）',
+      ),
+      'g1_6_item_3' => array(
+        '#title' => '活動報名、刷卡',
+      ),
+      'g1_6_item_4' => array(
+        '#title' => '設定上線的金流廠商正確銀行帳號密碼（非測試帳號）',
+        'configure_page_ubercart' => array('#text' => 'UberCart 設定', '#path' => 'admin/store/settings/payment'),
+        'configure_page_neticrm' => array('#text' => 'NetiCRM 設定', '#path' => 'civicrm/admin/paymentProcessor?reset=1'),
+      ),
+    ),
+  );
+  return $checklists;
+}

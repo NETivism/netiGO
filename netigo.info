@@ -1,0 +1,6 @@
+name = NetiGo Checklist
+description = A checklist for taking a web site live.
+core = 7.x
+package = NetiCustom
+dependencies[] = checklistapi
+configure = admin/config/development/netigo-checklist
